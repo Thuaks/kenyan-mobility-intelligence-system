@@ -1,0 +1,47 @@
+name: KUMIP CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio httpx ruff
+
+      - name: Lint (ruff)
+        run: ruff check app/ ml/ scripts/ --ignore E501
+
+      - name: Generate test data
+        run: python scripts/generate_data.py
+
+      - name: Run tests
+        env:
+          APP_ENV: testing
+          SECRET_KEY: test-secret-key-for-ci
+          DATABASE_URL: sqlite:///./test_kumip.db
+          DUCKDB_PATH: ./data/kumip_analytics_test.duckdb
+        run: pytest tests/ -v --tb=short
+
+      - name: Clean up test DB
+        if: always()
+        run: rm -f test_kumip.db data/kumip_analytics_test.duckdb

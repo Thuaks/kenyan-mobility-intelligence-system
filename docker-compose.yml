@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  # ── FastAPI Backend ──────────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: kumip-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=production
+      - DATABASE_URL=sqlite:////app/data/kumip.db
+      - DUCKDB_PATH=/app/data/kumip_analytics.duckdb
+    volumes:
+      - kumip-data:/app/data
+      - kumip-models:/app/models/saved
+      - kumip-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - kumip-net
+
+  # ── Streamlit Dashboard ──────────────────────────────────────────────────────
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    container_name: kumip-dashboard
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    environment:
+      - API_BASE_URL=http://api:8000/api/v1
+    volumes:
+      - kumip-data:/app/data:ro
+      - kumip-models:/app/models/saved:ro
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - kumip-net
+
+# ── Volumes ───────────────────────────────────────────────────────────────────
+volumes:
+  kumip-data:
+  kumip-models:
+  kumip-logs:
+
+# ── Networks ──────────────────────────────────────────────────────────────────
+networks:
+  kumip-net:
+    driver: bridge
