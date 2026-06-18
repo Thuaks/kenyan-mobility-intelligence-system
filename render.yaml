@@ -1,0 +1,27 @@
+services:
+  # ── FastAPI Backend ──────────────────────────────────────────────────────────
+  - type: web
+    name: kumip-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free                         # upgrade to starter ($7/mo) for always-on
+    region: frankfurt                  # closest to Nairobi
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true            # Render auto-generates a secure random value
+      - key: DATABASE_URL
+        value: sqlite:////app/data/kumip.db
+      - key: DUCKDB_PATH
+        value: /app/data/kumip_analytics.duckdb
+      - key: LOG_LEVEL
+        value: INFO
+      - key: ALLOWED_ORIGINS
+        value: "https://kumip.streamlit.app,http://localhost:8501"
+    disk:
+      name: kumip-data
+      mountPath: /app/data
+      sizeGB: 1
+    healthCheckPath: /health
+    autoDeploy: true                   # redeploy on every git push to main
