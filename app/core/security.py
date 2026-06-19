@@ -1,25 +1,38 @@
 """
 app/core/security.py
 JWT token creation/verification + bcrypt password hashing.
+
+NOTE: We use bcrypt directly instead of passlib's CryptContext wrapper.
+passlib 1.7.4's bcrypt backend probes `bcrypt.__about__.__version__`,
+which was removed in bcrypt>=4.1.0, causing a hard crash on every
+hash/verify call regardless of which bcrypt version is pinned in
+requirements.txt (transitive deps can still resolve a newer one).
+Calling bcrypt directly removes this fragile coupling entirely.
 """
+import bcrypt
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Union
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from app.core.config import get_settings
 
 settings = get_settings()
 
-# ── Password hashing ──────────────────────────────────────────────────────────
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+# bcrypt has a hard 72-byte limit on the input password
+_BCRYPT_MAX_BYTES = 72
 
 
 def hash_password(plain: str) -> str:
-    return pwd_context.hash(plain)
+    pw_bytes = plain.encode("utf-8")[:_BCRYPT_MAX_BYTES]
+    hashed = bcrypt.hashpw(pw_bytes, bcrypt.gensalt(rounds=12))
+    return hashed.decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    pw_bytes = plain.encode("utf-8")[:_BCRYPT_MAX_BYTES]
+    try:
+        return bcrypt.checkpw(pw_bytes, hashed.encode("utf-8"))
+    except (ValueError, TypeError):
+        return False
 
 
 # ── JWT ───────────────────────────────────────────────────────────────────────
@@ -43,10 +56,6 @@ def create_refresh_token(subject: Union[str, int]) -> str:
 
 
 def decode_token(token: str) -> dict:
-    """
-    Decode and validate a JWT token.
-    Raises JWTError on failure.
-    """
     return jwt.decode(
         token,
         settings.secret_key,
@@ -55,10 +64,6 @@ def decode_token(token: str) -> dict:
 
 
 def verify_token_type(token: str, expected_type: str) -> Optional[str]:
-    """
-    Decode token, verify its type, return subject (user_id).
-    Returns None if invalid.
-    """
     try:
         payload = decode_token(token)
         if payload.get("type") != expected_type:

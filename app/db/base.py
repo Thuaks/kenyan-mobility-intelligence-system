@@ -1,16 +1,18 @@
 """
 app/db/base.py
-SQLAlchemy async-compatible session factory.
+SQLAlchemy session factory.
 Uses SQLite for dev, swap DATABASE_URL for PostgreSQL in prod.
 """
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine, event, inspect
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from sqlalchemy.pool import StaticPool
 from app.core.config import get_settings
+from app.core.logging import get_logger
 
 settings = get_settings()
+logger   = get_logger(__name__)
 
-# SQLite: enforce FK constraints (disabled by default in SQLite)
+
 def _set_sqlite_pragma(dbapi_conn, _):
     cursor = dbapi_conn.cursor()
     cursor.execute("PRAGMA foreign_keys=ON")
@@ -48,6 +50,32 @@ def get_db():
 
 
 def create_tables():
-    """Create all tables on startup (dev). Use Alembic for prod migrations."""
+    """
+    Create all tables on startup if they don't already exist.
+    Safe to call on every container start/restart — Railway's persistent
+    volume keeps the SQLite file across deploys, so tables usually already
+    exist. We explicitly inspect first rather than relying solely on
+    create_all()'s internal checkfirst, and we swallow the
+    'table already exists' race so a fast double-start (e.g. Railway health
+    check hitting the app while it's still booting) never crashes startup.
+    """
     from app.models import user, route, accident, forecast, alert  # noqa: F401
-    Base.metadata.create_all(bind=engine)
+    from sqlalchemy.exc import OperationalError
+
+    inspector = inspect(engine)
+    existing_tables = set(inspector.get_table_names())
+    all_tables = set(Base.metadata.tables.keys())
+    missing = all_tables - existing_tables
+
+    if not missing:
+        logger.info(f"All {len(all_tables)} tables already exist — skipping create_all()")
+        return
+
+    try:
+        Base.metadata.create_all(bind=engine, checkfirst=True)
+        logger.info(f"Created {len(missing)} missing table(s): {missing}")
+    except OperationalError as e:
+        if "already exists" in str(e):
+            logger.warning(f"Table creation race detected (harmless): {e}")
+        else:
+            raise
