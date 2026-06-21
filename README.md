@@ -127,7 +127,6 @@ kumip/
 | GET  | `/api/v1/admin/users` | User management [admin] |
 | GET  | `/api/v1/admin/system/stats` | Record counts [admin] |
 
-Interactive docs: `http://localhost:8000/docs`
 
 ---
 
