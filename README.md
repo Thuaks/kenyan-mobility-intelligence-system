@@ -142,13 +142,6 @@ Interactive docs: `http://localhost:8000/docs`
 5. Deploy → API live at https://kumip-api.onrender.com/docs
 ```
 
-### Dashboard → Streamlit Community Cloud (Free)
-```
-1. Go to share.streamlit.io → New app
-2. Repo: YOUR_USERNAME/kumip
-3. Main file: app/dashboard/streamlit_app.py
-4. Deploy → Dashboard live at https://kumip.streamlit.app
-```
 
 ---
 
