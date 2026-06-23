@@ -28,12 +28,27 @@ def _section(title):
 
 
 def _load_data():
-    return {
-        "accidents": pd.read_csv(f"{DATA_PROC}/accidents_clean.csv"),
-        "routes":    pd.read_csv(f"{DATA_PROC}/route_profiles.csv"),
-        "demand":    pd.read_csv(f"{DATA_PROC}/demand_dataset.csv", parse_dates=["date"]),
-        "social":    pd.read_csv(f"{DATA_PROC}/social_sentiment.csv"),
-    }
+    print("  Loading accidents_clean.csv...", flush=True)
+    t0 = time.time()
+    accidents = pd.read_csv(f"{DATA_PROC}/accidents_clean.csv")
+    print(f"  Loaded accidents: {len(accidents)} rows in {time.time()-t0:.1f}s", flush=True)
+
+    print("  Loading route_profiles.csv...", flush=True)
+    t0 = time.time()
+    routes = pd.read_csv(f"{DATA_PROC}/route_profiles.csv")
+    print(f"  Loaded routes: {len(routes)} rows in {time.time()-t0:.1f}s", flush=True)
+
+    print("  Loading demand_dataset.csv (this is the big one, 262k rows)...", flush=True)
+    t0 = time.time()
+    demand = pd.read_csv(f"{DATA_PROC}/demand_dataset.csv", parse_dates=["date"], date_format="%Y-%m-%d")
+    print(f"  Loaded demand: {len(demand)} rows in {time.time()-t0:.1f}s", flush=True)
+
+    print("  Loading social_sentiment.csv...", flush=True)
+    t0 = time.time()
+    social = pd.read_csv(f"{DATA_PROC}/social_sentiment.csv")
+    print(f"  Loaded social: {len(social)} rows in {time.time()-t0:.1f}s", flush=True)
+
+    return {"accidents": accidents, "routes": routes, "demand": demand, "social": social}
 
 
 def _write_risk_scores_to_db(route_df, artifact):
