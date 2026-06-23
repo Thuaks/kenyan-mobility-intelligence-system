@@ -43,6 +43,7 @@ def train(route_df: pd.DataFrame) -> dict:
     X  = df[RISK_FEATURES].fillna(0).astype(float)
     y  = df["risk_score"].astype(int) - 1          # 0-indexed for XGBoost
 
+    print("  [debug] Initializing XGBClassifier...", flush=True)
     model = XGBClassifier(
         n_estimators=500, max_depth=4, learning_rate=0.04,
         subsample=0.85, colsample_bytree=0.75,
@@ -50,7 +51,9 @@ def train(route_df: pd.DataFrame) -> dict:
         use_label_encoder=False, eval_metric="mlogloss",
         random_state=42, verbosity=0,
     )
+    print("  [debug] Fitting XGBClassifier...", flush=True)
     model.fit(X, y)
+    print("  [debug] XGBClassifier fit complete", flush=True)
 
     # ── Cross-validation (4-fold — 4 samples per class minimum) ─────────────
     n_classes = len(set(y.tolist()))
@@ -68,8 +71,11 @@ def train(route_df: pd.DataFrame) -> dict:
 
     # ── SHAP ─────────────────────────────────────────────────────────────────
     # shap_values shape: (n_samples, n_features, n_classes)
+    print("  [debug] Creating SHAP TreeExplainer...", flush=True)
     explainer  = shap.TreeExplainer(model)
+    print("  [debug] Computing SHAP values...", flush=True)
     shap_vals  = explainer.shap_values(X)   # ndarray (20, 23, 5)
+    print("  [debug] SHAP values computed", flush=True)
 
     _plot_shap_summary(shap_vals, X, df)
     _plot_shap_waterfall(shap_vals, X, df)
