@@ -28,6 +28,7 @@ async def lifespan(app: FastAPI):
     setup_logging()
     logger.info(f"Starting {settings.app_name} v{settings.app_version}")
     logger.info(f"Environment: {settings.app_env}")
+    logger.info("🟢🟢🟢 BUILD MARKER vFIX2026 — bcrypt-direct security.py is ACTIVE 🟢🟢🟢")
 
     # Create SQLite tables (dev). In prod, Alembic handles this.
     create_tables()
