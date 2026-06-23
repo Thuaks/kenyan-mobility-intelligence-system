@@ -246,7 +246,7 @@ else:
         bar_color= "#e74c3c" if compound < -0.05 else "#2ecc71" if compound > 0.05 else "#f1c40f"
 
         st.markdown(
-            f"<div style='background:#1e2130;border:1px solid #2d3250;"
+            f"<div class='incident-card' style='background:#1e2130;border:1px solid #2d3250;"
             f"border-left:4px solid {t_color};border-radius:8px;"
             f"padding:12px 16px;margin-bottom:8px'>"
 

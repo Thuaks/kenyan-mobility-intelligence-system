@@ -28,9 +28,10 @@ with st.sidebar:
     st.markdown("## 🚦 NUMP")
     st.markdown(
         "<span style='color:#8b9ab0;font-size:0.82rem'>"
-        "Kenya Urban Mobility<br>Intelligence Platform</span>",
+        "Nairobi Urban Mobility<br>Platform</span>",
         unsafe_allow_html=True,
     )
+    st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
     st.divider()
     st.markdown("### Navigation")
     st.page_link("pages/01_home.py",       label="🏠 Home & KPIs")
@@ -81,12 +82,10 @@ feature_cards = [
 for col, icon, title, link, color, desc in feature_cards:
     with col:
         st.markdown(
-            f"<div style='background:#1e2130;border:1px solid #2d3250;"
-            f"border-top:3px solid {color};border-radius:10px;"
-            f"padding:20px 16px;text-align:center;min-height:160px'>"
-            f"<div style='font-size:2rem'>{icon}</div>"
-            f"<div style='color:#fff;font-weight:600;margin:8px 0 6px'>{title}</div>"
-            f"<div style='color:#8b9ab0;font-size:0.78rem;line-height:1.5'>{desc}</div>"
+            f"<div class='feature-card' style='--accent:{color}'>"
+            f"<div class='feature-icon'>{icon}</div>"
+            f"<div class='feature-title'>{title}</div>"
+            f"<div class='feature-desc'>{desc}</div>"
             f"</div>",
             unsafe_allow_html=True,
         )

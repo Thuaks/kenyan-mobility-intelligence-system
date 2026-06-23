@@ -122,8 +122,8 @@ with col_table:
             color = RISK_COLORS.get(tier, "#999")
             time_label = row.get("time_of_day", f"Hour {int(row['dominant_hour'])}")
             st.markdown(
-                f"<div style='background:#1e2130;border-left:4px solid {color};"
-                f"border-radius:6px;padding:10px 14px;margin-bottom:8px'>"
+                f"<div class='cluster-card' style='background:#1e2130;border-left:4px solid {color};"
+                f"border-radius:6px;padding:10px 14px;margin-bottom:8px;color:{color}'>"
                 f"<b style='color:#fff'>Blackspot BS{i+1}</b> &nbsp;"
                 f"<span class='risk-badge' style='background:{color}'>Tier {tier}</span><br>"
                 f"<span style='color:#8b9ab0;font-size:0.8rem'>"
