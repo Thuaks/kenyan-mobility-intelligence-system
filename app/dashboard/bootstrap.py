@@ -39,12 +39,16 @@ def ensure_data_ready() -> dict:
             try:
                 subprocess.run(
                     [sys.executable, "ml/pipeline/run_pipeline_fast.py"],
-                    check=True, capture_output=True, text=True, timeout=120,
+                    check=True, capture_output=True, text=True, timeout=240,
                 )
             except subprocess.CalledProcessError as e:
                 status["error"] = f"Pipeline stage failed (partial results may exist):\n{e.stderr[-2000:]}"
-            except subprocess.TimeoutExpired:
-                status["error"] = "ML pipeline timed out after 120s."
+            except subprocess.TimeoutExpired as e:
+                partial_out = (e.stdout or b"").decode("utf-8", errors="replace") if isinstance(e.stdout, bytes) else (e.stdout or "")
+                status["error"] = (
+                    f"ML pipeline timed out after 120s.\n\n"
+                    f"--- Last output before timeout ---\n{partial_out[-2000:]}"
+                )
 
     status["models_ok"] = os.path.exists(_MODEL_MARKER)
     return status
