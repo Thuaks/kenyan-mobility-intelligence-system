@@ -1,5 +1,6 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Stage 1 — Builder
+# Cache-bust: 2026-06-23-port-fix-v2
 # ═══════════════════════════════════════════════════════════════════════════════
 FROM python:3.11-slim AS builder
 
@@ -33,10 +34,9 @@ RUN useradd -m -u 1001 kumip && \
 
 USER kumip
 
-ENV PORT=8000
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-CMD ["sh", "-c", "test -f data/processed/route_profiles.csv || python scripts/generate_data.py; uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
+CMD ["sh", "-c", "test -f data/processed/route_profiles.csv || python scripts/generate_data.py; echo '>>> STARTING UVICORN ON PORT:' ${PORT:-8000}; exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
