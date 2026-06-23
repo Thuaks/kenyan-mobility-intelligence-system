@@ -38,13 +38,13 @@ def ensure_data_ready() -> dict:
         with st.spinner("First-time setup: training ML models (1-2 min)..."):
             try:
                 subprocess.run(
-                    [sys.executable, "ml/pipeline/run_pipeline.py"],
-                    check=True, capture_output=True, text=True, timeout=600,
+                    [sys.executable, "ml/pipeline/run_pipeline_fast.py"],
+                    check=True, capture_output=True, text=True, timeout=120,
                 )
             except subprocess.CalledProcessError as e:
                 status["error"] = f"Pipeline stage failed (partial results may exist):\n{e.stderr[-2000:]}"
             except subprocess.TimeoutExpired:
-                status["error"] = "ML pipeline timed out after 600s."
+                status["error"] = "ML pipeline timed out after 120s."
 
     status["models_ok"] = os.path.exists(_MODEL_MARKER)
     return status
