@@ -192,47 +192,22 @@ if show_xgb:
 
 
 # ── Row 4 — Prophet + Heatmap side by side ────────────────────────────────────
-col_prophet, col_heat = st.columns(2)
-
-with col_prophet:
-    if show_prophet:
-        st.markdown(
-            "<div class='section-header'>Prophet Time-Series Forecast</div>",
-            unsafe_allow_html=True,
+# Demand heatmap — full width (Prophet comparison removed: the bootstrap
+# pipeline trains XGBoost only, so Prophet artifacts are never present
+# in the deployed app and this section always showed "not found".)
+if show_heatmap:
+    st.markdown(
+        "<div class='section-header'>Demand Heatmap — Hour × Day of Week</div>",
+        unsafe_allow_html=True,
+    )
+    pivot = get_demand_heatmap_data(selected_id)
+    if not pivot.empty:
+        st.plotly_chart(
+            demand_heatmap(pivot, sel["route_name"]),
+            use_container_width=True,
         )
-        prophet_art = load_prophet("R001")  # trained on R001
-        if prophet_art and selected_id == "R001":
-            fc_df = prophet_art.get("forecast", pd.DataFrame())
-            st.plotly_chart(
-                prophet_forecast_line(fc_df, sel["route_name"]),
-                use_container_width=True,
-            )
-            p_mape = prophet_art.get("mape", None)
-            if p_mape:
-                st.caption(f"Prophet MAPE (in-sample): {p_mape*100:.1f}%")
-        elif selected_id != "R001":
-            st.info(
-                "Prophet model is trained on R001 (CBD–Route1) by default. "
-                "Select R001 to see the Prophet forecast, or run the full pipeline "
-                "to train per-route Prophet models."
-            )
-        else:
-            st.info("Prophet model not found. Run `make train`.")
-
-with col_heat:
-    if show_heatmap:
-        st.markdown(
-            "<div class='section-header'>Demand Heatmap — Hour × Day of Week</div>",
-            unsafe_allow_html=True,
-        )
-        pivot = get_demand_heatmap_data(selected_id)
-        if not pivot.empty:
-            st.plotly_chart(
-                demand_heatmap(pivot, sel["route_name"]),
-                use_container_width=True,
-            )
-        else:
-            st.info("No demand data for this route.")
+    else:
+        st.info("No demand data for this route.")
 
 
 # ── Row 5 — Cross-route demand comparison ─────────────────────────────────────

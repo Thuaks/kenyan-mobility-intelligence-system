@@ -29,7 +29,8 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("## 🚦 NUMP")
-    st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Kenya Urban Mobility<br>Intelligence Platform</span>", unsafe_allow_html=True)
+    st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Nairobi Urban Mobility<br>Platform</span>", unsafe_allow_html=True)
+    st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
     st.divider()
     st.markdown("### Navigation")
     st.page_link("pages/01_home.py",       label="🏠 Home & KPIs")
