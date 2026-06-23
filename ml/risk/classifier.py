@@ -49,7 +49,7 @@ def train(route_df: pd.DataFrame) -> dict:
         subsample=0.85, colsample_bytree=0.75,
         min_child_weight=2, gamma=0.1,
         use_label_encoder=False, eval_metric="mlogloss",
-        random_state=42, verbosity=0,
+        random_state=42, verbosity=0, n_jobs=1,
     )
     print("  [debug] Fitting XGBClassifier...", flush=True)
     model.fit(X, y)
@@ -59,8 +59,11 @@ def train(route_df: pd.DataFrame) -> dict:
     n_classes = len(set(y.tolist()))
     n_splits  = min(4, len(X) // n_classes)
     cv        = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=42)
-    cv_f1     = cross_val_score(model, X, y, cv=cv, scoring="f1_weighted")
-    cv_acc    = cross_val_score(model, X, y, cv=cv, scoring="accuracy")
+    print("  [debug] Running cross-validation (F1)...", flush=True)
+    cv_f1     = cross_val_score(model, X, y, cv=cv, scoring="f1_weighted", n_jobs=1)
+    print("  [debug] Running cross-validation (accuracy)...", flush=True)
+    cv_acc    = cross_val_score(model, X, y, cv=cv, scoring="accuracy", n_jobs=1)
+    print("  [debug] Cross-validation complete", flush=True)
     print(f"  CV F1  (weighted) : {cv_f1.mean():.3f}  ± {cv_f1.std():.3f}")
     print(f"  CV Acc            : {cv_acc.mean():.3f} ± {cv_acc.std():.3f}")
 
