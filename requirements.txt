@@ -21,6 +21,7 @@ numpy==1.26.4
 scikit-learn==1.4.2
 xgboost==2.0.3
 prophet==1.1.5
+cmdstanpy==1.2.0
 statsmodels==0.14.2
 shap==0.45.0
 joblib==1.4.0

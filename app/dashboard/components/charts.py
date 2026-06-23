@@ -275,25 +275,29 @@ def tweet_volume_trend(social_df: pd.DataFrame) -> go.Figure:
 def blackspot_severity_bar(bs_df: pd.DataFrame) -> go.Figure:
     top = bs_df.head(min(8, len(bs_df))).copy()
     top["label"] = [f"BS{i+1}" for i in range(len(top))]
-    colors = [RISK_COLORS[int(t)] for t in top["risk_tier"]]
+
+    n_fatal   = top["n_fatal"]   if "n_fatal"   in top.columns else pd.Series(0, index=top.index)
+    n_serious = top["n_serious"] if "n_serious" in top.columns else pd.Series(0, index=top.index)
+    n_minor   = top["n_minor"]   if "n_minor"   in top.columns else pd.Series(0, index=top.index)
+    has_breakdown = ("n_serious" in top.columns) or ("n_minor" in top.columns)
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(
-        name="Fatal",   x=top["label"], y=top["n_fatal"],
-        marker_color="#8e44ad",
-        hovertemplate="<b>%{x}</b><br>Fatal: %{y}<extra></extra>",
-    ))
-    fig.add_trace(go.Bar(
-        name="Serious", x=top["label"], y=top["n_serious"],
-        marker_color="#e74c3c",
-        hovertemplate="<b>%{x}</b><br>Serious: %{y}<extra></extra>",
-    ))
-    fig.add_trace(go.Bar(
-        name="Minor",   x=top["label"], y=top["n_minor"],
-        marker_color="#3498db",
-        hovertemplate="<b>%{x}</b><br>Minor: %{y}<extra></extra>",
-    ))
-    fig.update_layout(barmode="stack")
+    if has_breakdown:
+        fig.add_trace(go.Bar(name="Fatal", x=top["label"], y=n_fatal,
+            marker_color="#8e44ad", hovertemplate="<b>%{x}</b><br>Fatal: %{y}<extra></extra>"))
+        fig.add_trace(go.Bar(name="Serious", x=top["label"], y=n_serious,
+            marker_color="#e74c3c", hovertemplate="<b>%{x}</b><br>Serious: %{y}<extra></extra>"))
+        fig.add_trace(go.Bar(name="Minor", x=top["label"], y=n_minor,
+            marker_color="#3498db", hovertemplate="<b>%{x}</b><br>Minor: %{y}<extra></extra>"))
+        fig.update_layout(barmode="stack")
+    else:
+        total = top["n_incidents"] if "n_incidents" in top.columns else n_fatal
+        fig.add_trace(go.Bar(name="Fatal", x=top["label"], y=n_fatal,
+            marker_color="#8e44ad", hovertemplate="<b>%{x}</b><br>Fatal: %{y}<extra></extra>"))
+        fig.add_trace(go.Bar(name="Other", x=top["label"], y=(total - n_fatal).clip(lower=0),
+            marker_color="#3498db", hovertemplate="<b>%{x}</b><br>Other: %{y}<extra></extra>"))
+        fig.update_layout(barmode="stack")
+
     fig.update_xaxes(title="Blackspot Cluster")
     fig.update_yaxes(title="Accident Count")
     return _apply(fig, "Blackspot Severity Breakdown", height=320)
