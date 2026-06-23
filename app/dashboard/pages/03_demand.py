@@ -28,6 +28,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+from app.dashboard.bootstrap import require_data
+require_data()
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 
