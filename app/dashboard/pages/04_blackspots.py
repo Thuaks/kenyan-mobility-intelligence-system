@@ -19,7 +19,7 @@ from app.dashboard.components.charts import blackspot_severity_bar, accident_by_
 from app.dashboard.components.maps import blackspot_map, accident_heatmap_map
 
 st.set_page_config(
-    page_title="KUMIP — Blackspot Intelligence",
+    page_title="NUMP — Blackspot Intelligence",
     page_icon="📍",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -32,7 +32,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 KUMIP")
+    st.markdown("## 🚦 NUMP")
     st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Kenya Urban Mobility<br>Intelligence Platform</span>", unsafe_allow_html=True)
     st.divider()
     st.markdown("### Navigation")

@@ -47,7 +47,7 @@ async def lifespan(app: FastAPI):
     yield
 
     # ── Shutdown ──────────────────────────────────────────────────────────────
-    logger.info("Shutting down KUMIP API")
+    logger.info("Shutting down NUMP API")
     DuckDBClient.get().close()
 
 
@@ -60,17 +60,17 @@ def _seed_admin_user():
         db = SessionLocal()
         if db.query(User).count() == 0:
             admin = User(
-                email="admin@kumip.co.ke",
-                full_name="KUMIP Admin",
+                email="admin@nump.co.ke",
+                full_name="NUMP Admin",
                 hashed_password=hash_password("admin1234!"),
                 role=UserRole.admin,
-                organisation="KUMIP",
+                organisation="NUMP",
                 is_active=True,
                 is_verified=True,
             )
             db.add(admin)
             db.commit()
-            logger.info("Default admin user created: admin@kumip.co.ke / admin1234!")
+            logger.info("Default admin user created: admin@nump.co.ke / admin1234!")
         db.close()
     except Exception as e:
         logger.warning(f"Could not seed admin user: {e}")
@@ -81,7 +81,7 @@ def create_app() -> FastAPI:
         title=settings.app_name,
         version=settings.app_version,
         description=(
-            "Kenya Urban Mobility Intelligence Platform — "
+            "Nairobi Urban Mobility Platform — "
             "Real-time transit demand forecasting, matatu route risk scoring, "
             "and road safety intelligence for Nairobi."
         ),
@@ -136,7 +136,7 @@ def create_app() -> FastAPI:
 
     @app.get("/", include_in_schema=False)
     def root():
-        return {"message": f"KUMIP API v{settings.app_version} — visit /docs"}
+        return {"message": f"NUMP API v{settings.app_version} — visit /docs"}
 
     return app
 

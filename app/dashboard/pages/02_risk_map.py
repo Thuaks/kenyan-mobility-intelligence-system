@@ -19,7 +19,7 @@ from app.dashboard.components.charts import shap_waterfall_bar, route_risk_bar
 from app.dashboard.components.maps import route_risk_map, accident_heatmap_map
 
 st.set_page_config(
-    page_title="KUMIP — Route Risk Map",
+    page_title="NUMP — Route Risk Map",
     page_icon="🗺️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -32,7 +32,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 KUMIP")
+    st.markdown("## 🚦 NUMP")
     st.markdown(
         "<span style='color:#8b9ab0;font-size:0.82rem'>"
         "Kenya Urban Mobility<br>Intelligence Platform</span>",

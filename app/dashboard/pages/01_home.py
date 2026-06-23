@@ -19,7 +19,7 @@ from app.dashboard.components.charts import (
     accident_by_subcounty_bar, route_risk_bar,
 )
 
-st.set_page_config(page_title="KUMIP — Home", page_icon="🚦",
+st.set_page_config(page_title="NUMP — Home", page_icon="🚦",
                    layout="wide", initial_sidebar_state="expanded")
 
 from app.dashboard.bootstrap import require_data
@@ -28,7 +28,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 KUMIP")
+    st.markdown("## 🚦 NUMP")
     st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Kenya Urban Mobility<br>Intelligence Platform</span>", unsafe_allow_html=True)
     st.divider()
     st.markdown("### Navigation")
@@ -49,7 +49,7 @@ with st.spinner("Loading data…"):
     bs_df     = load_blackspots()
 
 # ── Header ─────────────────────────────────────────────────────────────────────
-st.markdown("<h1 style='margin-bottom:0'>🚦 Kenya Urban Mobility Intelligence Platform</h1><p style='color:#8b9ab0;margin-top:4px'>Real-time transit demand forecasting · Route risk scoring · Road safety intelligence · Nairobi, Kenya</p>", unsafe_allow_html=True)
+st.markdown("<h1 style='margin-bottom:0'>🚦 Nairobi Urban Mobility Platform</h1><p style='color:#8b9ab0;margin-top:4px'>Real-time transit demand forecasting · Route risk scoring · Road safety intelligence · Nairobi, Kenya</p>", unsafe_allow_html=True)
 st.divider()
 
 # ── KPI Cards ──────────────────────────────────────────────────────────────────
@@ -168,7 +168,7 @@ for emoji, title, finding, rec in findings:
 st.divider()
 st.markdown(
     f"<p style='color:#4a5568;font-size:0.75rem;text-align:center'>"
-    f"KUMIP v1.0 · Data period: {kpi['date_range']['from']} → {kpi['date_range']['to']} · "
+    f"NUMP v1.0 · Data period: {kpi['date_range']['from']} → {kpi['date_range']['to']} · "
     f"Sources: NTSA Kenya · OpenStreetMap · NASA POWER · X/Twitter</p>",
     unsafe_allow_html=True,
 )

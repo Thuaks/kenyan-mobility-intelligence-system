@@ -1,6 +1,6 @@
 """
 app/dashboard/components.py
-Reusable Plotly chart builders for the KUMIP Streamlit dashboard.
+Reusable Plotly chart builders for the NUMP Streamlit dashboard.
 Each function returns a go.Figure — pages call st.plotly_chart(fig).
 """
 import numpy as np

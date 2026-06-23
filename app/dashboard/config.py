@@ -4,7 +4,7 @@ Dashboard-wide theme, colour palette, and shared constants.
 Single source of truth for all visual styling decisions.
 """
 
-APP_TITLE       = "KUMIP — Kenya Urban Mobility Intelligence"
+APP_TITLE       = "NUMP — Kenya Urban Mobility Intelligence"
 APP_ICON        = "🚦"
 APP_LAYOUT      = "wide"
 SIDEBAR_STATE   = "expanded"

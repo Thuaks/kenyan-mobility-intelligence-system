@@ -1,6 +1,6 @@
 """
 ml/features.py
-Centralised feature engineering for all KUMIP models.
+Centralised feature engineering for all NUMP models.
 Single source of truth — imported by risk, demand, and NLP modules.
 """
 import numpy as np

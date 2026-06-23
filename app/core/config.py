@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     )
 
     # ── App ────────────────────────────────────────────────────────────────────
-    app_name: str = "Kenya Urban Mobility Intelligence Platform"
+    app_name: str = "Nairobi Urban Mobility Platform"
     app_env: str = "development"
     app_version: str = "1.0.0"
     debug: bool = True
@@ -34,8 +34,8 @@ class Settings(BaseSettings):
     refresh_token_expire_days: int = 7
 
     # ── Database ───────────────────────────────────────────────────────────────
-    database_url: str = "sqlite:///./kumip.db"
-    duckdb_path: str = "./data/kumip_analytics.duckdb"
+    database_url: str = "sqlite:///./nump.db"
+    duckdb_path: str = "./data/nump_analytics.duckdb"
 
     # ── CORS ───────────────────────────────────────────────────────────────────
     allowed_origins: List[str] = [
@@ -55,7 +55,7 @@ class Settings(BaseSettings):
 
     # ── Logging ────────────────────────────────────────────────────────────────
     log_level: str = "INFO"
-    log_file: str = "./logs/kumip.log"
+    log_file: str = "./logs/nump.log"
 
     @property
     def is_production(self) -> bool:

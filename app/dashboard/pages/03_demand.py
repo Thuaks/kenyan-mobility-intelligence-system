@@ -23,7 +23,7 @@ from app.dashboard.components.charts import (
 )
 
 st.set_page_config(
-    page_title="KUMIP — Demand Forecast",
+    page_title="NUMP — Demand Forecast",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -36,7 +36,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 KUMIP")
+    st.markdown("## 🚦 NUMP")
     st.markdown(
         "<span style='color:#8b9ab0;font-size:0.82rem'>"
         "Kenya Urban Mobility<br>Intelligence Platform</span>",
