@@ -165,16 +165,25 @@ if show_xgb:
             annotation_position="bottom right",
         )
         # Mark peak hour
-        # Convert to an ISO string rather than passing a raw pd.Timestamp —
-        # plotly add_vline internally averages x-coordinates for annotation
-        # placement, and that arithmetic breaks on native pandas Timestamp
-        # objects in some plotly/pandas version combinations (TypeError in
-        # pandas._libs.tslibs.timestamps). A plain string sidesteps it.
+        # NOTE: fig.add_vline() is broken on datetime x-axes in this
+        # plotly version — its internal _mean() helper calls sum() on a
+        # single-element list of datetimes, which fails because
+        # sum() starts from int 0 and 0 + datetime is unsupported
+        # (TypeError in pandas Timestamp.__radd__). Drawing the line and
+        # annotation manually via add_shape()/add_annotation() avoids
+        # that broken code path entirely — we control the positioning.
         peak_dt = pd.to_datetime(str(peak_row["date"])) + pd.Timedelta(hours=int(peak_row["hour"]))
-        fig_xgb.add_vline(
-            x=peak_dt.isoformat(), line_dash="dash",
-            line_color="#e74c3c",
-            annotation_text="Peak",
+        fig_xgb.add_shape(
+            type="line",
+            x0=peak_dt, x1=peak_dt,
+            y0=0, y1=1,
+            yref="paper",
+            line=dict(color="#e74c3c", dash="dash", width=1.5),
+        )
+        fig_xgb.add_annotation(
+            x=peak_dt, y=1, yref="paper",
+            text="Peak", showarrow=False,
+            yshift=10, font=dict(color="#e74c3c", size=11),
         )
         st.plotly_chart(fig_xgb, use_container_width=True)
     else:
