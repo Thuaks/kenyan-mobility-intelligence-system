@@ -8,6 +8,22 @@ import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 import streamlit as st
+
+# First-boot bootstrap: Streamlit Cloud clones a fresh repo with no
+# generated data/models (both gitignored). Generate once, then skip.
+_DATA_MARKER = "data/processed/route_profiles.csv"
+_MODEL_MARKER = "models/saved/risk_classifier.pkl"
+
+if not os.path.exists(_DATA_MARKER):
+    with st.spinner("First-time setup: generating datasets (about 30s)..."):
+        import subprocess
+        subprocess.run([sys.executable, "scripts/generate_data.py"], check=True)
+
+if not os.path.exists(_MODEL_MARKER):
+    with st.spinner("First-time setup: training ML models (1-2 min)..."):
+        import subprocess
+        subprocess.run([sys.executable, "ml/pipeline/run_pipeline.py"], check=True)
+
 from app.dashboard.config import GLOBAL_CSS, APP_TITLE, APP_ICON
 
 st.set_page_config(
@@ -18,7 +34,6 @@ st.set_page_config(
 )
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
-# ── Sidebar shared across the landing page ─────────────────────────────────────
 with st.sidebar:
     st.markdown("## 🚦 KUMIP")
     st.markdown(
@@ -42,7 +57,6 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-# ── Landing hero ───────────────────────────────────────────────────────────────
 st.markdown(
     "<div style='text-align:center;padding:60px 20px 30px'>"
     "<div style='font-size:4rem'>🚦</div>"
@@ -58,7 +72,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ── Feature cards ──────────────────────────────────────────────────────────────
 st.markdown("<br>", unsafe_allow_html=True)
 c1, c2, c3, c4, c5 = st.columns(5)
 
@@ -88,7 +101,6 @@ for col, icon, title, link, color, desc in feature_cards:
             unsafe_allow_html=True,
         )
 
-# ── Tech stack strip ───────────────────────────────────────────────────────────
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.divider()
 st.markdown(
