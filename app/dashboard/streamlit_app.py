@@ -8,12 +8,11 @@ import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 import streamlit as st
-
-from app.dashboard.bootstrap import require_data
-require_data()
-
 from app.dashboard.config import GLOBAL_CSS, APP_TITLE, APP_ICON
 
+# set_page_config MUST be the very first Streamlit command in a script
+# run — calling require_data() (which uses st.spinner/st.cache_resource)
+# before this raises StreamlitAPIException.
 st.set_page_config(
     page_title=APP_TITLE,
     page_icon=APP_ICON,
@@ -21,6 +20,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
+
+from app.dashboard.bootstrap import require_data
+require_data()
 
 with st.sidebar:
     st.markdown("## 🚦 NUMP")
