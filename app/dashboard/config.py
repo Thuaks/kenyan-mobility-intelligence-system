@@ -120,6 +120,21 @@ GLOBAL_CSS = f"""
       margin-top: 6px;
       animation: underline-draw 0.7s ease-out 0.15s forwards;
   }}
+  .page-title-gradient {{
+      background: linear-gradient(90deg, #ffffff 0%, var(--title-accent, #ffffff) 140%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+  }}
+  @keyframes cursor-blink {{
+      0%, 50%  {{ opacity: 1; }}
+      51%, 100% {{ opacity: 0; }}
+  }}
+  .subtitle-cursor {{
+      display: inline-block;
+      margin-left: 2px;
+      animation: cursor-blink 1.1s step-end infinite;
+  }}
   .kpi-value {{
       font-size: 2.2rem; font-weight: 700; color: #ffffff; line-height: 1.1;
   }}
@@ -207,10 +222,12 @@ def render_page_title(icon: str, title: str, subtitle: str, accent: str) -> str:
     """
     return (
         f"<div class='page-title-wrap'>"
-        f"<h2 style='margin-bottom:0'>"
+        f"<h2 class='page-title-gradient' style='margin-bottom:0;--title-accent:{accent}'>"
         f"<span class='page-title-icon'>{icon}</span> {title}"
         f"</h2>"
         f"<div class='page-title-underline' style='background:{accent}'></div>"
-        f"<p style='color:#8b9ab0;margin-top:8px'>{subtitle}</p>"
+        f"<p style='color:#8b9ab0;margin-top:8px'>{subtitle}"
+        f"<span class='subtitle-cursor' style='color:{accent}'>▌</span>"
+        f"</p>"
         f"</div>"
     )
