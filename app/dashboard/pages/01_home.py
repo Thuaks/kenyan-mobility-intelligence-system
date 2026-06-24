@@ -9,7 +9,7 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
-from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, TOPIC_COLORS
+from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, TOPIC_COLORS, render_page_title
 from app.dashboard.data_loader import (
     load_accidents, load_routes, load_social,
     load_blackspots, get_kpi_summary,
@@ -50,7 +50,14 @@ with st.spinner("Loading data…"):
     bs_df     = load_blackspots()
 
 # ── Header ─────────────────────────────────────────────────────────────────────
-st.markdown("<h1 style='margin-bottom:0'>🚦 Nairobi Urban Mobility Platform</h1><p style='color:#8b9ab0;margin-top:4px'>Real-time transit demand forecasting · Route risk scoring · Road safety intelligence · Nairobi, Kenya</p>", unsafe_allow_html=True)
+st.markdown(
+    render_page_title(
+        "🚦", "Nairobi Urban Mobility Platform",
+        "Real-time transit demand forecasting · Route risk scoring · Road safety intelligence · Nairobi, Kenya",
+        "#3498db",
+    ),
+    unsafe_allow_html=True,
+)
 st.divider()
 
 # ── KPI Cards ──────────────────────────────────────────────────────────────────

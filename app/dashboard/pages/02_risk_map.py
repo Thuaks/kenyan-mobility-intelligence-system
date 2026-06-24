@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS
+from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, render_page_title
 from app.dashboard.data_loader import load_routes, load_accidents, load_risk_model
 from app.dashboard.components.charts import shap_waterfall_bar, route_risk_bar
 from app.dashboard.components.maps import route_risk_map, accident_heatmap_map
@@ -87,10 +87,12 @@ filtered_df = route_df[route_df["risk_score"].isin(risk_filter)].copy()
 
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<h2 style='margin-bottom:0'>🗺️ Route Risk Map</h2>"
-    "<p style='color:#8b9ab0;margin-top:4px'>"
-    "ML-scored risk tiers for all 20 Nairobi matatu routes · "
-    "XGBoost classifier + SHAP explainability</p>",
+    render_page_title(
+        "🗺️", "Route Risk Map",
+        "ML-scored risk tiers for all 20 Nairobi matatu routes · "
+        "XGBoost classifier + SHAP explainability",
+        "#e74c3c",
+    ),
     unsafe_allow_html=True,
 )
 st.divider()

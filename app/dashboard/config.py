@@ -96,6 +96,30 @@ GLOBAL_CSS = f"""
   .risk-badge-critical {{
       animation: risk-pulse 2.2s ease-in-out infinite;
   }}
+
+  /* ── Page title — animated accent underline + breathing icon ──────────── */
+  @keyframes underline-draw {{
+      from {{ width: 0; }}
+      to   {{ width: 100%; }}
+  }}
+  @keyframes icon-breathe {{
+      0%, 100% {{ transform: scale(1) rotate(0deg); }}
+      50%      {{ transform: scale(1.08) rotate(-3deg); }}
+  }}
+  .page-title-wrap {{
+      margin-bottom: 0;
+  }}
+  .page-title-icon {{
+      display: inline-block;
+      animation: icon-breathe 3.4s ease-in-out infinite;
+  }}
+  .page-title-underline {{
+      height: 3px;
+      width: 0;
+      border-radius: 2px;
+      margin-top: 6px;
+      animation: underline-draw 0.7s ease-out 0.15s forwards;
+  }}
   .kpi-value {{
       font-size: 2.2rem; font-weight: 700; color: #ffffff; line-height: 1.1;
   }}
@@ -172,3 +196,21 @@ GLOBAL_CSS = f"""
   }}
 </style>
 """
+
+def render_page_title(icon: str, title: str, subtitle: str, accent: str) -> str:
+    """
+    Returns HTML for a page title with:
+      - a breathing icon animation
+      - an animated underline that draws in on load, colored per-page
+      - a subtitle line beneath
+    Usage: st.markdown(render_page_title("🗺️", "Route Risk Map", "...", "#e74c3c"), unsafe_allow_html=True)
+    """
+    return (
+        f"<div class='page-title-wrap'>"
+        f"<h2 style='margin-bottom:0'>"
+        f"<span class='page-title-icon'>{icon}</span> {title}"
+        f"</h2>"
+        f"<div class='page-title-underline' style='background:{accent}'></div>"
+        f"<p style='color:#8b9ab0;margin-top:8px'>{subtitle}</p>"
+        f"</div>"
+    )

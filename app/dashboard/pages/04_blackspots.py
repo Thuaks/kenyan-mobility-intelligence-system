@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS
+from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, render_page_title
 from app.dashboard.data_loader import load_accidents, load_blackspots
 from app.dashboard.components.charts import blackspot_severity_bar, accident_by_hour_bar
 from app.dashboard.components.maps import blackspot_map, accident_heatmap_map
@@ -78,10 +78,12 @@ bs_filtered  = bs_df[bs_df["n_incidents"] >= min_incidents].copy() if not bs_df.
 
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<h2 style='margin-bottom:0'>📍 Blackspot Intelligence</h2>"
-    "<p style='color:#8b9ab0;margin-top:4px'>"
-    "DBSCAN spatial clustering · 600m radius · min 5 incidents · "
-    "Nairobi road network 2021–2024</p>",
+    render_page_title(
+        "📍", "Blackspot Intelligence",
+        "DBSCAN spatial clustering · 600m radius · min 5 incidents · "
+        "Nairobi road network 2021–2024",
+        "#e67e22",
+    ),
     unsafe_allow_html=True,
 )
 st.divider()

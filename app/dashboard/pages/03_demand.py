@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, DAY_NAMES
+from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, DAY_NAMES, render_page_title
 from app.dashboard.data_loader import (
     load_routes, load_demand, load_demand_xgb,
     load_prophet, get_demand_heatmap_data, get_forecast_for_route,
@@ -81,10 +81,12 @@ if route_df.empty:
 
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<h2 style='margin-bottom:0'>📈 Demand Forecast Explorer</h2>"
-    "<p style='color:#8b9ab0;margin-top:4px'>"
-    "Hourly passenger demand forecasts · Prophet per-route + XGBoost multi-route · "
-    "Holiday-aware · School-term aware</p>",
+    render_page_title(
+        "📈", "Demand Forecast Explorer",
+        "Hourly passenger demand forecasts · Prophet per-route + XGBoost multi-route · "
+        "Holiday-aware · School-term aware",
+        "#2ecc71",
+    ),
     unsafe_allow_html=True,
 )
 st.divider()

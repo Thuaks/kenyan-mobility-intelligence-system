@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-from app.dashboard.config import GLOBAL_CSS, TOPIC_COLORS, SENTIMENT_COLORS
+from app.dashboard.config import GLOBAL_CSS, TOPIC_COLORS, SENTIMENT_COLORS, render_page_title
 from app.dashboard.data_loader import load_social
 from app.dashboard.components.charts import (
     sentiment_pie, topic_volume_bar, tweet_volume_trend,
@@ -92,10 +92,12 @@ filtered = filtered.sort_values("timestamp", ascending=False)
 
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown(
-    "<h2 style='margin-bottom:0'>📣 Social Intelligence Feed</h2>"
-    "<p style='color:#8b9ab0;margin-top:4px'>"
-    "Matatu incident monitoring · VADER + Sheng sentiment scoring · "
-    "TF-IDF / LSA / K-Means topic clustering · X (Twitter)</p>",
+    render_page_title(
+        "📣", "Social Intelligence Feed",
+        "Matatu incident monitoring · VADER + Sheng sentiment scoring · "
+        "TF-IDF / LSA / K-Means topic clustering · X (Twitter)",
+        "#9b59b6",
+    ),
     unsafe_allow_html=True,
 )
 st.divider()
