@@ -121,7 +121,7 @@ GLOBAL_CSS = f"""
       animation: underline-draw 0.7s ease-out 0.15s forwards;
   }}
   .page-title-gradient {{
-      background: linear-gradient(90deg, #ffffff 0%, var(--title-accent, #ffffff) 140%);
+      background: linear-gradient(90deg, #ffffff -10%, var(--title-accent, #ffffff) 75%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
