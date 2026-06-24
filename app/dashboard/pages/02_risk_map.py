@@ -47,6 +47,14 @@ with st.sidebar:
     st.page_link("pages/04_blackspots.py", label="📍 Blackspot Intelligence")
     st.page_link("pages/05_social.py",     label="📣 Social Feed")
     st.divider()
+    st.markdown(
+        "<span style='color:#8b9ab0;font-size:0.75rem'>"
+        "v1.0 · Built with XGBoost · Prophet<br>"
+        "DBSCAN · VADER · FastAPI · Folium<br><br>"
+        "Built by <b style='color:#8b9ab0'>Alex Thuku</b>"
+        "</span>",
+        unsafe_allow_html=True,
+    )
 
     st.markdown("### 🎛️ Controls")
     risk_filter = st.multiselect(
