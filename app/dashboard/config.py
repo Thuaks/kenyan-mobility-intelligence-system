@@ -35,7 +35,12 @@ GLOBAL_CSS = f"""
 <style>
   [data-testid="stSidebarNav"] {{ display: none; }}
 
-  .stApp {{ background-color: #0f1117; color: #e0e0e0; }}
+  .stApp {{
+      background-color: #0f1117;
+      color: #e0e0e0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+  }}
 
   [data-testid="stSidebar"] {{
       background-color: #1a1d27;
