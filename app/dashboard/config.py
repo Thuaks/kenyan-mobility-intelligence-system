@@ -57,19 +57,44 @@ GLOBAL_CSS = f"""
       );
   }}
 
+  @keyframes fade-up {{
+      from {{ opacity: 0; transform: translateY(14px); }}
+      to   {{ opacity: 1; transform: translateY(0); }}
+  }}
+  @keyframes risk-pulse {{
+      0%, 100% {{ opacity: 1; box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.4); }}
+      50%      {{ opacity: 0.82; box-shadow: 0 0 0 6px rgba(142, 68, 173, 0); }}
+  }}
+
   .kpi-card {{
-      background: #1e2130;
-      border: 1px solid #2d3250;
+      background: rgba(30, 33, 48, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: 10px;
       padding: 18px 20px;
       text-align: center;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
       cursor: default;
+      animation: fade-up 0.45s ease-out backwards;
   }}
   .kpi-card:hover {{
       transform: translateY(-4px);
       border-color: #4a5578;
+      background: rgba(35, 39, 64, 0.65);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.04);
+  }}
+  div[data-testid="column"]:nth-of-type(1) .kpi-card {{ animation-delay: 0.02s; }}
+  div[data-testid="column"]:nth-of-type(2) .kpi-card {{ animation-delay: 0.07s; }}
+  div[data-testid="column"]:nth-of-type(3) .kpi-card {{ animation-delay: 0.12s; }}
+  div[data-testid="column"]:nth-of-type(4) .kpi-card {{ animation-delay: 0.17s; }}
+  div[data-testid="column"]:nth-of-type(5) .kpi-card {{ animation-delay: 0.22s; }}
+  div[data-testid="column"]:nth-of-type(6) .kpi-card {{ animation-delay: 0.27s; }}
+  div[data-testid="column"]:nth-of-type(7) .kpi-card {{ animation-delay: 0.32s; }}
+  div[data-testid="column"]:nth-of-type(8) .kpi-card {{ animation-delay: 0.37s; }}
+
+  .risk-badge-critical {{
+      animation: risk-pulse 2.2s ease-in-out infinite;
   }}
   .kpi-value {{
       font-size: 2.2rem; font-weight: 700; color: #ffffff; line-height: 1.1;

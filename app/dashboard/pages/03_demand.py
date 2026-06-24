@@ -113,7 +113,7 @@ with col_info:
         f"<div style='padding:12px 18px;background:#1e2130;border-radius:8px;"
         f"border-left:4px solid {tier_col};margin-top:22px'>"
         f"<b style='color:#fff'>{sel['route_name']}</b> &nbsp;"
-        f"<span class='risk-badge' style='background:{tier_col}'>Risk {tier}/5</span><br>"
+        f"<span class='risk-badge{' risk-badge-critical' if tier == 5 else ''}' style='background:{tier_col}'>Risk {tier}/5</span><br>"
         f"<span style='color:#8b9ab0;font-size:0.82rem'>"
         f"Distance: {sel['distance_km']:.1f} km &nbsp;·&nbsp; "
         f"Sub-county: {sel['sub_county']} &nbsp;·&nbsp; "

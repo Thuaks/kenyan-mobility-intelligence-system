@@ -134,7 +134,7 @@ with col_table:
                 f"<div class='cluster-card' style='background:#1e2130;border-left:4px solid {color};"
                 f"border-radius:6px;padding:10px 14px;margin-bottom:8px;color:{color}'>"
                 f"<b style='color:#fff'>Blackspot BS{i+1}</b> &nbsp;"
-                f"<span class='risk-badge' style='background:{color}'>Tier {tier}</span><br>"
+                f"<span class='risk-badge{' risk-badge-critical' if tier == 5 else ''}' style='background:{color}'>Tier {tier}</span><br>"
                 f"<span style='color:#8b9ab0;font-size:0.8rem'>"
                 f"📍 {row['centroid_lat']:.4f}, {row['centroid_lon']:.4f}<br>"
                 f"🚨 {int(row['n_incidents'])} incidents · {int(row['n_fatal'])} fatal<br>"

@@ -129,7 +129,7 @@ with col_badge:
         f"<div class='kpi-value' style='color:{color};font-size:2.4rem'>{tier}/5</div>"
         f"<div class='kpi-label'>Risk Score</div>"
         f"<div style='margin-top:6px'>"
-        f"<span class='risk-badge' style='background:{color}'>{label}</span>"
+        f"<span class='risk-badge{' risk-badge-critical' if tier == 5 else ''}' style='background:{color}'>{label}</span>"
         f"</div></div>",
         unsafe_allow_html=True,
     )
