@@ -230,6 +230,27 @@ GLOBAL_CSS = f"""
       scrollbar-width: thin;
       scrollbar-color: #2d3250 #0f1117;
   }}
+
+  /* ── Custom scrollbar — thin, dark-theme native ─────────────────────────── */
+  ::-webkit-scrollbar {{
+      width: 8px;
+      height: 8px;
+  }}
+  ::-webkit-scrollbar-track {{
+      background: #0f1117;
+  }}
+  ::-webkit-scrollbar-thumb {{
+      background: #2d3250;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+  }}
+  ::-webkit-scrollbar-thumb:hover {{
+      background: #4a5578;
+  }}
+  * {{
+      scrollbar-width: thin;
+      scrollbar-color: #2d3250 #0f1117;
+  }}
 </style>
 """
 
