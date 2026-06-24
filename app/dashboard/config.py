@@ -117,6 +117,14 @@ GLOBAL_CSS = f"""
   .page-title-icon {{
       display: inline-block;
       animation: icon-breathe 3.4s ease-in-out infinite;
+      /* Escape the parent .page-title-gradient's background-clip:text +
+         color:transparent — without this, the emoji inherits transparent
+         text color and becomes invisible since it's nested inside the
+         gradient-clipped <h2>. */
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: initial;
+      background: none;
   }}
   .page-title-underline {{
       height: 3px;
