@@ -1,9 +1,9 @@
 """
 ml/features.py
-Centralised feature engineering for all NUMP models.
+Centralised feature engineering for all NUMIP models.
 Single source of truth — imported by risk, demand, and NLP modules.
 """
-import numpy as np
+import numipy as np
 import pandas as pd
 from typing import List, Tuple
 

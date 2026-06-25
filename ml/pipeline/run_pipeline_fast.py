@@ -154,7 +154,7 @@ def stage_nlp_fast(data):
 def run_all_fast():
     t_start = time.time()
     os.makedirs(MODELS_DIR, exist_ok=True)
-    print(f"\nNUMP Fast Bootstrap Pipeline — {MODEL_VERSION}")
+    print(f"\nNUMIP Fast Bootstrap Pipeline — {MODEL_VERSION}")
     data = _load_data()
     stage_risk_fast(data)
     stage_demand_fast(data)

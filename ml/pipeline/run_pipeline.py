@@ -266,7 +266,7 @@ def run_all():
     os.makedirs(MODELS_DIR,  exist_ok=True)
     os.makedirs(FIGURES_DIR, exist_ok=True)
 
-    print(f"\n🚦 NUMP ML Pipeline  —  {MODEL_VERSION}")
+    print(f"\n🚦 NUMIP ML Pipeline  —  {MODEL_VERSION}")
     print(f"   Started: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}")
 
     data = _load_data()

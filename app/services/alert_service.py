@@ -54,7 +54,7 @@ class AlertService:
     def evaluate_route_for_alert(route: Route, risk_score: RouteRiskScore) -> Optional[dict]:
         if risk_score.risk_score >= CRITICAL_RISK_SCORE:
             message = (
-                f"NUMP ALERT: Route {route.route_id} ({route.route_name}) "
+                f"NUMIP ALERT: Route {route.route_id} ({route.route_name}) "
                 f"is now CRITICAL risk (score {risk_score.risk_score}/5). "
                 f"Accidents (24mo): {risk_score.accidents_24mo}. "
                 f"SACCO operators should review vehicle safety checks."
@@ -89,7 +89,7 @@ class AlertService:
                 .first()
             )
             if not latest_score:
-                message = f"NUMP ALERT: Route {route_id} status update requested."
+                message = f"NUMIP ALERT: Route {route_id} status update requested."
                 alert_type = "manual"
             else:
                 evaluation = AlertService.evaluate_route_for_alert(route, latest_score)
@@ -98,7 +98,7 @@ class AlertService:
                     alert_type = evaluation["alert_type"]
                 else:
                     message = (
-                        f"NUMP ALERT: Route {route_id} ({route.route_name}) "
+                        f"NUMIP ALERT: Route {route_id} ({route.route_name}) "
                         f"risk score: {latest_score.risk_score}/5 ({latest_score.risk_label})."
                     )
                     alert_type = "manual"

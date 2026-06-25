@@ -19,7 +19,7 @@ from app.dashboard.components.charts import (
     accident_by_subcounty_bar, route_risk_bar,
 )
 
-st.set_page_config(page_title="NUMP — Home", page_icon="🚦",
+st.set_page_config(page_title="NUMIP — Home", page_icon="🚦",
                    layout="wide", initial_sidebar_state="expanded")
 
 from app.dashboard.bootstrap import require_data
@@ -28,7 +28,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 NUMP")
+    st.markdown("## 🚦 NUMIP")
     st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Nairobi Urban Mobility<br>Platform</span>", unsafe_allow_html=True)
     st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
     st.divider()
@@ -52,7 +52,7 @@ with st.spinner("Loading data…"):
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown(
     render_page_title(
-        "🚦", "Nairobi Urban Mobility Platform",
+        "🚦", "Nairobi Urban Mobility Intelligence Platform",
         "Real-time transit demand forecasting · Route risk scoring · Road safety intelligence · Nairobi, Kenya",
         "#3498db",
     ),
@@ -176,7 +176,7 @@ for emoji, title, finding, rec in findings:
 st.divider()
 st.markdown(
     f"<p style='color:#4a5568;font-size:0.75rem;text-align:center'>"
-    f"NUMP v1.0 · Data period: {kpi['date_range']['from']} → {kpi['date_range']['to']} · "
+    f"NUMIP v1.0 · Data period: {kpi['date_range']['from']} → {kpi['date_range']['to']} · "
     f"Sources: NTSA Kenya · OpenStreetMap · NASA POWER · X/Twitter</p>",
     unsafe_allow_html=True,
 )

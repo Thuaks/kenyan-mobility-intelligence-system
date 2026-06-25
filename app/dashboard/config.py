@@ -3,7 +3,7 @@ app/dashboard/config.py
 Dashboard-wide theme, colour palette, and shared constants.
 """
 
-APP_TITLE       = "NUMP — Nairobi Urban Mobility"
+APP_TITLE       = "NUMIP — Nairobi Urban Mobility"
 APP_ICON        = "🚦"
 APP_LAYOUT      = "wide"
 SIDEBAR_STATE   = "expanded"

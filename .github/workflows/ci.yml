@@ -1,4 +1,4 @@
-name: NUMP CI
+name: NUMIP CI
 
 on:
   push:
@@ -38,10 +38,10 @@ jobs:
         env:
           APP_ENV: testing
           SECRET_KEY: test-secret-key-for-ci
-          DATABASE_URL: sqlite:///./test_nump.db
-          DUCKDB_PATH: ./data/nump_analytics_test.duckdb
+          DATABASE_URL: sqlite:///./test_numip.db
+          DUCKDB_PATH: ./data/numip_analytics_test.duckdb
         run: pytest tests/ -v --tb=short
 
       - name: Clean up test DB
         if: always()
-        run: rm -f test_nump.db data/nump_analytics_test.duckdb
+        run: rm -f test_numip.db data/numip_analytics_test.duckdb

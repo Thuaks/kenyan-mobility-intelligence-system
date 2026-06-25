@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 import streamlit as st
 import pandas as pd
-import numpy as np
+import numipy as np
 import plotly.graph_objects as go
 
 from app.dashboard.config import GLOBAL_CSS, TOPIC_COLORS, SENTIMENT_COLORS, render_page_title
@@ -19,7 +19,7 @@ from app.dashboard.components.charts import (
 )
 
 st.set_page_config(
-    page_title="NUMP — Social Intelligence",
+    page_title="NUMIP — Social Intelligence",
     page_icon="📣",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -32,7 +32,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 NUMP")
+    st.markdown("## 🚦 NUMIP")
     st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Nairobi Urban Mobility<br>Platform</span>", unsafe_allow_html=True)
     st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
     st.divider()

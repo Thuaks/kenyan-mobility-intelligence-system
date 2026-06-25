@@ -1,10 +1,10 @@
-# 🚦 NUMP — Nairobi Urban Mobility Platform
+# 🚦 NUMIP — Nairobi Urban Mobility Intelligence Platform
 
 > Real-time transit demand forecasting · Matatu route risk scoring ·
 > Road safety blackspot detection · Social incident intelligence
 > **Nairobi, Kenya**
 
-[![CI](https://github.com/YOUR_USERNAME/nump/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/nump/actions)
+[![CI](https://github.com/YOUR_USERNAME/numip/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/numip/actions)
 [![Python](https://img.shields.io/badge/python-3.11-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111-green)](https://fastapi.tiangolo.com)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.35-red)](https://streamlit.io)
@@ -18,7 +18,7 @@ daily passengers. Yet route utilisation is never measured at the route level,
 road safety assessment is reactive and annual, and matatu fares fluctuate with
 no predictive signal. **Kenya has the data. Nobody has built the pipeline.**
 
-NUMP merges NTSA accident records, OpenStreetMap road network data,
+NUMIP merges NTSA accident records, OpenStreetMap road network data,
 NASA weather, and social media into a single ML intelligence platform.
 
 ---
@@ -37,8 +37,8 @@ NASA weather, and social media into a single ML intelligence platform.
 ## Quick Start
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/nump.git
-cd nump
+git clone https://github.com/YOUR_USERNAME/numip.git
+cd numip
 
 # 1. Install dependencies
 pip install -r requirements.txt
@@ -73,7 +73,7 @@ make docker-up
 ## Project Structure
 
 ```
-nump/
+numip/
 ├── app/
 │   ├── main.py                    # FastAPI app factory
 │   ├── core/                      # Config, logging, JWT security
@@ -138,7 +138,7 @@ nump/
 2. New Web Service → connect repo
 3. Runtime: Docker → Dockerfile
 4. Environment: set SECRET_KEY to a random 32-char string
-5. Deploy → API live at https://nump-api.onrender.com/docs
+5. Deploy → API live at https://numip-api.onrender.com/docs
 ```
 
 

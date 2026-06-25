@@ -1,6 +1,6 @@
 """
 app/dashboard/streamlit_app.py
-Main Streamlit entry point — bootstraps the NUMP dashboard.
+Main Streamlit entry point — bootstraps the NUMIP dashboard.
 Streamlit Community Cloud runs THIS file.
 All 5 pages live in pages/ and are auto-discovered by Streamlit's MPA system.
 """
@@ -25,7 +25,7 @@ from app.dashboard.bootstrap import require_data
 require_data()
 
 with st.sidebar:
-    st.markdown("## 🚦 NUMP")
+    st.markdown("## 🚦 NUMIP")
     st.markdown(
         "<span style='color:#8b9ab0;font-size:0.82rem'>"
         "Nairobi Urban Mobility<br>Platform</span>",
@@ -52,9 +52,9 @@ with st.sidebar:
 st.markdown(
     "<div style='text-align:center;padding:60px 20px 30px'>"
     "<div style='font-size:4rem'>🚦</div>"
-    "<h1 style='font-size:2.4rem;font-weight:700;margin:10px 0 6px'>NUMP</h1>"
+    "<h1 style='font-size:2.4rem;font-weight:700;margin:10px 0 6px'>NUMIP</h1>"
     "<h2 style='font-size:1.3rem;font-weight:400;color:#8b9ab0;margin:0 0 20px'>"
-    "Nairobi Urban Mobility Platform</h2>"
+    "Nairobi Urban Mobility Intelligence Platform</h2>"
     "<p style='color:#6b7a95;max-width:620px;margin:0 auto;font-size:0.95rem'>"
     "Real-time transit demand forecasting · Matatu route risk scoring · "
     "Road safety blackspot detection · Social incident intelligence — "

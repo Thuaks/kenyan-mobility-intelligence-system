@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
-import numpy as np
+import numipy as np
 import plotly.graph_objects as go
 
 from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, render_page_title
@@ -19,7 +19,7 @@ from app.dashboard.components.charts import blackspot_severity_bar, accident_by_
 from app.dashboard.components.maps import blackspot_map, accident_heatmap_map
 
 st.set_page_config(
-    page_title="NUMP — Blackspot Intelligence",
+    page_title="NUMIP — Blackspot Intelligence",
     page_icon="📍",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -32,7 +32,7 @@ st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
 # ── Sidebar ────────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## 🚦 NUMP")
+    st.markdown("## 🚦 NUMIP")
     st.markdown("<span style='color:#8b9ab0;font-size:0.82rem'>Nairobi Urban Mobility<br>Platform</span>", unsafe_allow_html=True)
     st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
     st.divider()
