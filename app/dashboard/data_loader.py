@@ -108,3 +108,74 @@ def get_forecast_for_route(route_id: str, days: int = 7) -> pd.DataFrame:
         )
     except Exception:
         return pd.DataFrame()
+
+# ── Alert helpers (SMS alert pipeline, mock mode) ───────────────────────────
+def _get_alert_db_session():
+    """Opens a short-lived SQLAlchemy session for alert operations."""
+    import sys, os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+    from app.db.base import SessionLocal, create_tables
+    create_tables()
+    return SessionLocal()
+
+
+@st.cache_data(ttl=30, show_spinner=False)
+def get_critical_routes() -> list:
+    """Routes currently qualifying for a Critical risk alert."""
+    from app.services.alert_service import AlertService
+    db = _get_alert_db_session()
+    try:
+        return AlertService.scan_for_critical_routes(db)
+    except Exception:
+        return []
+    finally:
+        db.close()
+
+
+def trigger_dashboard_alert(route_id: str, recipient_phone: str, custom_message: str = None) -> dict:
+    """
+    Sends a (mock) SMS alert from the dashboard. Never cached — this is
+    a write action. Returns a dict with success/error info for the UI
+    to display, rather than raising, so Streamlit pages can show a
+    clean message instead of a stack trace.
+    """
+    from app.services.alert_service import AlertService
+    db = _get_alert_db_session()
+    try:
+        alert = AlertService.trigger_alert(
+            db=db, route_id=route_id, recipient_phone=recipient_phone,
+            custom_message=custom_message, triggered_by="dashboard",
+        )
+        return {
+            "success": alert.sent,
+            "message": alert.message,
+            "message_id": alert.at_message_id,
+            "error": alert.error_message,
+        }
+    except ValueError as e:
+        return {"success": False, "message": None, "message_id": None, "error": str(e)}
+    finally:
+        db.close()
+
+
+def get_alert_history(limit: int = 10) -> list:
+    """Recent alert history — never cached, always fresh after a trigger."""
+    from app.services.alert_service import AlertService
+    db = _get_alert_db_session()
+    try:
+        alerts = AlertService.get_alert_history(db, limit=limit)
+        return [
+            {
+                "route_id": a.route_id,
+                "recipient_phone": a.recipient_phone,
+                "message": a.message,
+                "sent": a.sent,
+                "at_message_id": a.at_message_id,
+                "created_at": a.created_at,
+            }
+            for a in alerts
+        ]
+    except Exception:
+        return []
+    finally:
+        db.close()
