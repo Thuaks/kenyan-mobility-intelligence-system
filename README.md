@@ -202,16 +202,6 @@ This project showcases:
 
 ---
 
-## Future Enhancements
-
-- Real-time GPS integration
-- Live traffic intelligence
-- Mobile application support
-- Fare prediction engine
-- Route optimization algorithms
-- Real-time event detection
-
----
 
 ## Author
 
