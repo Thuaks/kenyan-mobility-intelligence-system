@@ -17,6 +17,7 @@ from app.api.middleware.logging import RequestLoggingMiddleware
 from app.api.routers import auth
 from app.api.routers import routes as routes_router
 from app.api.routers import demand, accidents, social, admin
+from app.api.routers import alerts
 
 settings = get_settings()
 logger   = get_logger(__name__)
@@ -109,6 +110,7 @@ def create_app() -> FastAPI:
     app.include_router(accidents.router,           prefix=prefix)
     app.include_router(social.router,              prefix=prefix)
     app.include_router(admin.router,               prefix=prefix)
+    app.include_router(alerts.router,              prefix=prefix)
 
     # ── Health check (unauthenticated) ────────────────────────────────────────
     @app.get("/health", tags=["Health"], include_in_schema=True)
