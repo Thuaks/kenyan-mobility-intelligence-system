@@ -39,4 +39,13 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8000}/health || exit 1
 
-CMD ["sh", "-c", "test -f data/processed/route_profiles.csv || python scripts/generate_data.py; echo '>>> STARTING UVICORN ON PORT:' ${PORT:-8000}; exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
+# Boot sequence:
+#   1. Generate synthetic CSVs if not already present (powers DuckDB
+#      analytical views used by /accidents, /demand/summary, etc.)
+#   2. Run the lightweight ML pipeline if the SQL routes table is empty
+#      — this populates routes + route_risk_scores via SQLAlchemy,
+#      which the /routes and /alerts endpoints depend on. Uses the
+#      fast variant (skips per-route Prophet + NLP topic clustering)
+#      to keep container boot time reasonable.
+#   3. Start Uvicorn.
+CMD ["sh", "-c", "test -f data/processed/route_profiles.csv || python scripts/generate_data.py; python -c \"from app.db.base import SessionLocal, create_tables; from app.models.route import Route; create_tables(); db = SessionLocal(); n = db.query(Route).count(); db.close(); exit(0 if n > 0 else 1)\" || python ml/pipeline/run_pipeline_fast.py; echo '>>> STARTING UVICORN ON PORT:' ${PORT:-8000}; exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]
