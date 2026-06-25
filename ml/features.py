@@ -3,7 +3,7 @@ ml/features.py
 Centralised feature engineering for all NUMIP models.
 Single source of truth — imported by risk, demand, and NLP modules.
 """
-import numipy as np
+import numpy as np
 import pandas as pd
 from typing import List, Tuple
 

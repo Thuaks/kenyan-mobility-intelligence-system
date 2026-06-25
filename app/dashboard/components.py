@@ -3,7 +3,7 @@ app/dashboard/components.py
 Reusable Plotly chart builders for the NUMIP Streamlit dashboard.
 Each function returns a go.Figure — pages call st.plotly_chart(fig).
 """
-import numipy as np
+import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px

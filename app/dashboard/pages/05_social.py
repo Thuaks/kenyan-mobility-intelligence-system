@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 
 import streamlit as st
 import pandas as pd
-import numipy as np
+import numpy as np
 import plotly.graph_objects as go
 
 from app.dashboard.config import GLOBAL_CSS, TOPIC_COLORS, SENTIMENT_COLORS, render_page_title

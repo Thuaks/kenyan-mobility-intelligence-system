@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../.
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
-import numipy as np
+import numpy as np
 import plotly.graph_objects as go
 
 from app.dashboard.config import GLOBAL_CSS, RISK_COLORS, RISK_LABELS, render_page_title
