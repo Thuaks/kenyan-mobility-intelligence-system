@@ -28,7 +28,7 @@ with st.sidebar:
     st.markdown("## 🚦 NUMIP")
     st.markdown(
         "<span style='color:#8b9ab0;font-size:0.82rem'>"
-        "Nairobi Urban Mobility<br>Platform</span>",
+        "Nairobi Urban Mobility<br>Intelligence Platform</span>",
         unsafe_allow_html=True,
     )
     st.markdown("<div class='ke-flag-stripe'></div>", unsafe_allow_html=True)
