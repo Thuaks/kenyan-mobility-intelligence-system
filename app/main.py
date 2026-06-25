@@ -111,6 +111,8 @@ def create_app() -> FastAPI:
     app.include_router(social.router,              prefix=prefix)
     app.include_router(admin.router,               prefix=prefix)
     app.include_router(alerts.router,              prefix=prefix)
+    logger.info(f"[DIAG] alerts.router has {len(alerts.router.routes)} routes: {[r.path for r in alerts.router.routes]}")
+    logger.info(f"[DIAG] Total app routes after all registrations: {len(app.routes)}")
 
     # ── Health check (unauthenticated) ────────────────────────────────────────
     @app.get("/health", tags=["Health"], include_in_schema=True)
