@@ -286,6 +286,98 @@ if not filtered_df.empty:
 else:
     st.warning("No routes match the selected tier filter.")
 
+# ── Row 6 — SMS Alert Pipeline (mock Africa's Talking sandbox) ───────────────
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='section-header'>📲 SMS Alert Pipeline "
+    "<span style='color:#8b9ab0;font-size:0.8rem;font-weight:400'>"
+    "(sandbox / mock mode — no real SMS sent)</span></div>",
+    unsafe_allow_html=True,
+)
+
+from app.dashboard.data_loader import (
+    get_critical_routes, trigger_dashboard_alert, get_alert_history,
+)
+
+critical_list = get_critical_routes()
+
+col_crit, col_form = st.columns([2, 3])
+
+with col_crit:
+    st.markdown(
+        f"<div class='kpi-card'>"
+        f"<div class='kpi-value' style='color:#8e44ad;font-size:1.8rem'>{len(critical_list)}</div>"
+        f"<div class='kpi-label'>Routes Needing Alert</div>"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+    st.markdown("<br>", unsafe_allow_html=True)
+    if critical_list:
+        for r in critical_list:
+            st.markdown(
+                f"<div class='cluster-card' style='background:#1e2130;"
+                f"border-left:4px solid #8e44ad;border-radius:6px;"
+                f"padding:8px 12px;margin-bottom:6px;color:#8e44ad'>"
+                f"<b style='color:#fff'>{r['route_id']}</b> — {r['route_name']}<br>"
+                f"<span style='color:#8b9ab0;font-size:0.78rem'>"
+                f"Risk {r['risk_score']}/5 · {r['accidents_24mo']} accidents (24mo)</span>"
+                f"</div>",
+                unsafe_allow_html=True,
+            )
+    else:
+        st.info("No routes currently at Critical risk.")
+
+with col_form:
+    st.markdown("**Send a test alert**")
+    alert_route_options = {r.route_id: f"{r.route_id} — {r.route_name}" for _, r in route_df.iterrows()}
+    alert_route_id = st.selectbox(
+        "Route",
+        options=list(alert_route_options.keys()),
+        format_func=lambda x: alert_route_options[x],
+        key="alert_route_select",
+    )
+    alert_phone = st.text_input(
+        "Recipient phone (sandbox — not a real number needed)",
+        value="+254712345678",
+        key="alert_phone_input",
+    )
+    alert_custom_msg = st.text_area(
+        "Custom message (optional — leave blank to auto-compose from risk score)",
+        key="alert_custom_msg",
+        height=80,
+    )
+
+    if st.button("📤 Send Alert (mock)", key="send_alert_btn"):
+        with st.spinner("Sending..."):
+            result = trigger_dashboard_alert(
+                route_id=alert_route_id,
+                recipient_phone=alert_phone,
+                custom_message=alert_custom_msg.strip() if alert_custom_msg.strip() else None,
+            )
+        if result["success"]:
+            st.success(f"✓ Alert sent (mock ID: {result['message_id']})")
+            st.caption(result["message"])
+        else:
+            st.error(f"Failed: {result.get('error', 'Unknown error')}")
+
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<div class='section-header'>Recent Alert History</div>", unsafe_allow_html=True)
+history = get_alert_history(limit=10)
+if history:
+    import pandas as pd
+    hist_df = pd.DataFrame(history)
+    hist_df["created_at"] = pd.to_datetime(hist_df["created_at"]).dt.strftime("%Y-%m-%d %H:%M")
+    st.dataframe(
+        hist_df.rename(columns={
+            "route_id": "Route", "recipient_phone": "Phone",
+            "message": "Message", "sent": "Sent",
+            "at_message_id": "Mock SMS ID", "created_at": "Time",
+        }),
+        use_container_width=True, height=250,
+    )
+else:
+    st.caption("No alerts sent yet.")
+
 # ── Footer ─────────────────────────────────────────────────────────────────────
 st.divider()
 st.markdown(
