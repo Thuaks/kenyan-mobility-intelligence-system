@@ -1,16 +1,3 @@
-<div align="center">
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,17,24&height=180&section=header&text=NUMIP&fontSize=60&fontColor=fff&fontAlignY=35&desc=Nairobi%20Urban%20Mobility%20Intelligence%20Platform&descAlignY=58&descSize=18&descColor=fff" width="100%"/>
-
-</div>
-
-<div align="center">
-
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&pause=1000&color=2ECC71&center=true&vCenter=true&width=650&lines=Predicting+matatu+route+risk+with+XGBoost+%2B+SHAP;Forecasting+demand+before+the+rain+even+starts;DBSCAN-powered+blackspot+detection+across+Nairobi;Mock+SMS+alerts+%E2%80%94+because+real+APIs+cost+money;Built%2C+broken%2C+debugged%2C+and+shipped+anyway" alt="Typing SVG" />
-
-</div>
-
----
 
 ## 🚦 What is this thing?
 
