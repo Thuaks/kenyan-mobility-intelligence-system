@@ -9,7 +9,7 @@ It is, unapologetically, four ML models wearing a FastAPI trench coat with a Str
 
 ---
 
-## 🧠 The Brains
+##  The Brains
 
 | Engine | Model | What it actually does |
 |---|---|---|
@@ -21,7 +21,7 @@ It is, unapologetically, four ML models wearing a FastAPI trench coat with a Str
 
 ---
 
-## 🛠️ Built With (and Fought With)
+##  Built With (and Fought With)
 
 <div align="center">
 
@@ -40,7 +40,7 @@ It is, unapologetically, four ML models wearing a FastAPI trench coat with a Str
 
 ---
 
-## ⚡ The Five Pages
+##  The Five Pages
 
 | Page | What you'll see |
 |---|---|
@@ -52,7 +52,7 @@ It is, unapologetically, four ML models wearing a FastAPI trench coat with a Str
 
 ---
 
-## 🔥 Honest War Stories From Building This
+##  Honest War Stories From Building This
 
 > *Because every README pretends everything went smoothly. This one doesn't.*
 
@@ -64,7 +64,7 @@ It is, unapologetically, four ML models wearing a FastAPI trench coat with a Str
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```bash
 git clone https://github.com/Thuaks/kenyan-mobility-intelligence-system.git
@@ -87,7 +87,7 @@ docker compose up --build
 
 ---
 
-## 🌍 Who Would Actually Use This
+## Who Would Actually Use This
 
 | Who | Why |
 |---|---|
